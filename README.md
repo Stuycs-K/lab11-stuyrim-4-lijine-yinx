@@ -21,25 +21,25 @@ Make a clear list of features that work/dont work
 
 50 hp
 **weapon**
-Staff 
+- Staff 
 **moves**
-Support move
+- Support move
 - heals 20 hp and makes healed ally do 25% more damage
-Attack move 
+- Attack move 
 - 10 dmg 
-Special: 
-Heal yourself for 20 hp but consume xx mana.
+- Special: 
+- Heal yourself for 20 hp but consume xx mana.
 
 
 ## Mage
 
 60 hp
-**weapn**
-Wand 
+**weapon**
+- Wand 
 **moves**
-Attack
- - does 15 dmg and makes enemies do 20% less damage
-Special 
+- Attack
+- does 15 dmg and makes enemies do 20% less damage
+- Special 
 - does 20 dmg and applies burn to enemy team (burn does 5 damage each round)
 
 
@@ -48,9 +48,12 @@ Special
 120 hp
 Dragon
 **moves**
-Attacks - do 20 damage
-Supports - heal for 10 hp
-Special - loses hp to deal burn damage equivalent to health lost (max 20 dmg) 
+- Attacks
+- do 20 damage
+-Supports 
+- heal for 10 hp
+-Special 
+- loses hp to deal burn damage equivalent to health lost (max 20 dmg) 
 
 
 
