@@ -17,6 +17,30 @@ Make a clear list of features that work/dont work
 
 
 ## Adventurer Subclasses
+Healer subclass
 
-replace this with your documentation for your two Adventurer subclasses. If you modify or replace the provided CodeWarrior class, please provide documentation for that as well.
+50 hp
+Staff 
+Support move - heals 20 hp and makes healed ally do 25% more damage
+Attack move - 10 dmg 
+Special: Heal yourself for 20 hp but consume xx mana.
+
+
+Mage
+
+60 hp
+Wand 
+Attack - does 15 dmg and makes enemies do 20% less damage
+Special - does 20 dmg and applies burn to enemy team (burn does 5 damage each round)
+
+
+Boss
+
+120 hp
+Dragon
+Attacks - do 20 damage
+Supports - heal for 10 hp
+Special - loses hp to deal burn damage equivalent to health lost (max 20 dmg) 
+
+
 
