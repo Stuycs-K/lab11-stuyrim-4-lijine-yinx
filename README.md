@@ -20,7 +20,7 @@ Make a clear list of features that work/dont work
 ## Healer subclass
 
 50 hp
-**weapon**
+- **weapon**
 - Staff 
 **moves**
 - Support move
@@ -34,7 +34,7 @@ Make a clear list of features that work/dont work
 ## Mage
 
 60 hp
-**weapon**
+- **weapon**
 - Wand 
 **moves**
 - Attack
