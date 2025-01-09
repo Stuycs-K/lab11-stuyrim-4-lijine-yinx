@@ -20,9 +20,9 @@ Make a clear list of features that work/dont work
 ## Healer subclass
 
 50 hp
-- **weapon**
+- ## weapon:
 - Staff 
-- ## moves:## 
+- ## moves:
 - Support move
 - heals 20 hp and makes healed ally do 25% more damage
 - Attack move 
@@ -34,9 +34,9 @@ Make a clear list of features that work/dont work
 ## Mage
 
 60 hp
-- **weapon**
+- ## weapon: 
 - Wand 
-- ## moves:## 
+- ## moves:
 - Attack
 - does 15 dmg and makes enemies do 20% less damage
 - Special 
@@ -47,7 +47,7 @@ Make a clear list of features that work/dont work
 
 120 hp
 Dragon
-- ## moves:## 
+- ## moves:
 - Attacks
 - do 20 damage
 -Supports 
