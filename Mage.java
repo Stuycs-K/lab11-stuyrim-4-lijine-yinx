@@ -18,9 +18,11 @@ public class Mage extends Adventurer{
   //concrete method written using abstract methods.
   //refill special resource by amount, but only up to at most getSpecialMax()
     public int restoreSpecial(int n){
-    if (n < getSpecialMax()){
-
+    if (getSpecialMax() - getSpecial() > n){
+        n = getSpecial() - getSpecial();
     }
+    setSpecial(getSpecial() + n);
+    return n;
   }
 
   /*
@@ -28,7 +30,11 @@ public class Mage extends Adventurer{
   support their allys
   */
   //hurt or hinder the target adventurer
-    public String attack(Adventurer other);
+    public String attack(Adventurer other){
+        int damage = 15;
+        other.applyDamage(damage);
+        return other.getName() + " has been pulverized until a crisp. They lose 15 hp and now have " + other.getHP();
+    }
 
   /*This is an example of an improvement that you can make to allow
    * for more flexible targetting.
@@ -46,9 +52,14 @@ public class Mage extends Adventurer{
 
   //hurt or hinder the target adventurer, consume some special resource
     public String specialAttack(Adventurer other){
-        if (getSpecial() > 0){
-
-        }
+        if(getSpecial() >= 10){
+            setSpecial(getSpecial()-10);
+            int damage = 20;
+            other.applyDamage(damage);
+            return this + " used their wand and struck the head of the opponent";
+          }else{
+            return "Not enough caffeine to use the ultimate code. Instead "+attack(other);
+          }
     }
 
 
