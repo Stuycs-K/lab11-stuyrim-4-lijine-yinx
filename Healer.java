@@ -16,11 +16,20 @@ public class Healer extends Adventurer{
   }
 
 
-    public abstract String getSpecialName();
+  public String getSpecialName(){
+    return "mana";
+  }
+
   //accessor methods
-  public abstract int getSpecial();
-  public abstract int getSpecialMax();
-  public abstract void setSpecial(int n);
+  public int getSpecial(){
+    return mana;
+  }
+  public int getSpecialMax(){
+    return manaMax;
+  }
+  public abstract void setSpecial(int n){
+      mana = n;
+  }
 
   //concrete method written using abstract methods.
   //refill special resource by amount, but only up to at most getSpecialMax()
