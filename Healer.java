@@ -46,7 +46,11 @@ public class Healer extends Adventurer{
   support their allys
   */
   //hurt or hinder the target adventurer
-  public abstract String attack(Adventurer other);
+  public String attack(Adventurer other){
+    int damage = (int)(Math.random() * 5) + 1;
+    other.applyDamage(damage);
+    return this + "smacks" + other + "with the staff for" + damage + " damage.";
+  }
 
   /*This is an example of an improvement that you can make to allow
    * for more flexible targetting.
