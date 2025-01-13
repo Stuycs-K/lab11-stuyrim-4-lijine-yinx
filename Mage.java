@@ -1,6 +1,12 @@
 public class Mage extends Adventurer{
     private int mana, manaMax;
 
+    public Mage(String name, int hp, int mana, int manaMax){
+        super(name,hp);
+        this.mana = mana;
+        this.manaMax = manaMax;
+    }
+
     public String getSpecialName(){
         return "mana";
     }
@@ -43,12 +49,24 @@ public class Mage extends Adventurer{
   //public abstract String support(ArrayList<Adventurer> others);
 
   //heal or buff the target adventurer
-    public String support(Adventurer other);
-
-  //heal or buff self
+    public String support(Adventurer other){
+        return "uses spiritual powers on "+other+" and restores "
+        + other.restoreSpecial(5)+" "+other.getSpecialName();
+      }
+      /*Restores 6 special and 1 hp to self.*/
+    
     public String support(){
+        int hp = 5;
+        if (getSpecial() > 10){
+            setHP(getHP()+hp);
+            setSpecial(getSpecial()- 5);
+            return this+"consumes 10 mana to restore 5 hp";
+        }
+        else {
+            return this + "did not have enough mana";
+        }
+      }
 
-  }
 
   //hurt or hinder the target adventurer, consume some special resource
     public String specialAttack(Adventurer other){
