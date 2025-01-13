@@ -1,4 +1,21 @@
 public class Healer extends Adventurer{
+  private int mana, manaMax;
+
+  public Healer(String name, int hp){
+    super(name, hp);
+    manaMax = 20;
+    mana = manaMax/2;
+  }
+
+  public Healer(String name){
+    this(name, 18);
+  }
+
+  public Healer(){
+    this("Priest");
+  }
+
+
     public abstract String getSpecialName();
   //accessor methods
   public abstract int getSpecial();
