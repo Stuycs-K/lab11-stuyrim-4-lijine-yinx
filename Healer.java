@@ -47,7 +47,7 @@ public class Healer extends Adventurer{
   */
   //hurt or hinder the target adventurer
   public String attack(Adventurer other){
-    int damage = (int)(Math.random() * 5) + 1;
+    int damage = 10;
     other.applyDamage(damage);
     return this + "smacks" + other + "with the staff for" + damage + " damage.";
   }
@@ -65,6 +65,14 @@ public class Healer extends Adventurer{
   public abstract String support();
 
   //hurt or hinder the target adventurer, consume some special resource
-  public abstract String specialAttack(Adventurer other);
-
+  public String specialAttack(Adventurer other);
+    if (getSpecial() >= 10){
+      setSpecial(getSpecial() - 10);
+      int healAmount = (int)(Math.random() * 15) + 5;
+      other.setHP(other.getHP() + healAmount);
+      return this + "casts a healing spell on" + other + ", restoring" + healAmount + "HP.";
+    } else {
+      return this + "tries to cast a healing spell but doesn't have enough mana."
+    }
+    }
 }
