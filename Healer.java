@@ -59,10 +59,18 @@ public class Healer extends Adventurer{
   //public abstract String support(ArrayList<Adventurer> others);
 
   //heal or buff the target adventurer
-  public abstract String support(Adventurer other);
+  public String support(Adventurer other){
+    int healAmount = (int)(Math.random() * 10) + 5;
+    other.setHP(other.getHP() + healAmount);
+    return this + "heals" + other + "for" healAmount + "HP.";
+  }
 
   //heal or buff self
-  public abstract String support();
+  public String support(){
+    int healAmount = (int)(Math.random() * 10) + 5;
+    setHP(getHP() + healAmount);
+    return this + "heals themselves for" + healAmount + "HP.";
+  }
 
   //hurt or hinder the target adventurer, consume some special resource
   public String specialAttack(Adventurer other);
