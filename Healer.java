@@ -71,7 +71,7 @@ public class Healer extends Adventurer{
       int healAmount = (int)(Math.random() * 15) + 5;
       other.setHP(other.getHP() + healAmount);
       return this + "casts a healing spell on" + other + ", restoring" + healAmount + "HP.";
-    } else {
+    } else{
       return this + "tries to cast a healing spell but doesn't have enough mana."
     }
     }
