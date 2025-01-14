@@ -1,9 +1,35 @@
 public class Healer extends Adventurer{
-    public abstract String getSpecialName();
+  private int mana, manaMax;
+
+  public Healer(String name, int hp){
+    super(name, hp);
+    manaMax = 20;
+    mana = manaMax/2;
+  }
+
+  public Healer(String name){
+    this(name, 18);
+  }
+
+  public Healer(){
+    this("Priest");
+  }
+
+
+  public String getSpecialName(){
+    return "mana";
+  }
+
   //accessor methods
-  public abstract int getSpecial();
-  public abstract int getSpecialMax();
-  public abstract void setSpecial(int n);
+  public int getSpecial(){
+    return mana;
+  }
+  public int getSpecialMax(){
+    return manaMax;
+  }
+  public abstract void setSpecial(int n){
+      mana = n;
+  }
 
   //concrete method written using abstract methods.
   //refill special resource by amount, but only up to at most getSpecialMax()
@@ -20,7 +46,11 @@ public class Healer extends Adventurer{
   support their allys
   */
   //hurt or hinder the target adventurer
-  public abstract String attack(Adventurer other);
+  public String attack(Adventurer other){
+    int damage = (int)(Math.random() * 5) + 1;
+    other.applyDamage(damage);
+    return this + "smacks" + other + "with the staff for" + damage + " damage.";
+  }
 
   /*This is an example of an improvement that you can make to allow
    * for more flexible targetting.
