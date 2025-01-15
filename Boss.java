@@ -31,3 +31,24 @@ public class Boss extends Adventurer{
   public void setSpecial(int n){
     rage = n;
   }
+
+  public int restoreSpecial(int n){
+    if(n > getSpecialMax() - getSpecial()){
+      n = getSpecialMax() - getSpecial();
+    }
+    setSpecial(getSpecial() - n);
+    return n;
+  }
+
+  public String attack(Adventurer other){
+    int damage = 20;
+    other.applyDamage(damage);
+    return this + "shoots fire from his mouth and burns" + other + "for" + damage + "HP.";
+  }
+
+  public String support(){
+    int hp = 10;
+    if(getSpecial() > 10){
+      
+    }
+  }
