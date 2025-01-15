@@ -14,3 +14,20 @@ public class Boss extends Adventurer{
   public Boss(){
     this("Dragon");
   }
+
+  public String getSpecialName(){
+    return "rage";
+  }
+
+  //accessor methods
+  public int getSpecial(){
+    return rage;
+  }
+
+  public int getSpecialMax(){
+    return rageMax;
+  }
+
+  public void setSpecial(int n){
+    rage = n;
+  }
