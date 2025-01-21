@@ -1,4 +1,6 @@
 import java.util.*;
+
+import org.w3c.dom.Text;
 public class Game{
   private static final int WIDTH = 80;
   private static final int HEIGHT = 30;
@@ -13,7 +15,14 @@ public class Game{
   //Do not write over the blank areas where text will appear or parties will appear.
   public static void drawBackground(){
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
+    for (int row = 1; row <= HEIGHT; row++) {
+      for (int col = 1; col <= WIDTH; col++) {
+        if (row == 1 || row == HEIGHT || col == 1 || col == WIDTH) {
+            Test.go(row, col);
+            Test.printChar('#', BORDER_COLOR, BORDER_BACKGROUND);
+        }
+      }
+    }
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
 
@@ -22,8 +31,11 @@ public class Game{
   //use this method in your other text drawing methods to make things simpler.
   public static void drawText(String s,int startRow, int startCol){
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    Test.go(startRow, startCol);
+    for (char c : s.toCharArray()) {
+        Test.printChar(c, Text.WHITE, Test.BLACK);
+    }
+    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
 
   /*Use this method to place text on the screen at a particular location.
@@ -38,7 +50,24 @@ public class Game{
   */
   public static void TextBox(int row, int col, int width, int height, String text){
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
+    String[] words = test.split(" ");
+    StringBuilder currentLine = new StringBuilder();
+    int currentRow = row;
+
+    for (String word : words) {
+      if (currentLine.length() + word.length() + 1 > width) {
+          drawText(currentLine.length(), currentRow, col);
+          currentRow++;
+          if (currentRow >= row + height) break;
+          currentLine = new StringBuilder();
+      }
+      currentLine.append((currentLine.length() == 0 ? "" : " ") + word);
+    }
+
+    if (currentRow < row + height) {
+        drawText(currentLine.toString(), currentRow, col);
+        currentRow++;
+    }
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
 
