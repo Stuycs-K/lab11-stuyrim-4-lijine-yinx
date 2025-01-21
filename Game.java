@@ -1,3 +1,4 @@
+import java.lang.foreign.AddressLayout;
 import java.util.*;
 
 import org.w3c.dom.Text;
@@ -92,7 +93,15 @@ public class Game{
     public static void drawParty(ArrayList<Adventurer> party,int startRow){
 
       /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-      //YOUR CODE HERE
+      int colWidth = WIDTH / party.size();
+      for (int i = 0; i < party.size(); i++) {
+        Adventurer a = party.get(i);
+        int colStart = i * colWidth + 1;
+        drawText(a.getName, startRow, colStart);
+        drawText("HP: " + colorByPercent(a.getHP(), a.getMaxHP()), startRow + 1, colStart);
+        drawText(a.getSpecialName() + ": " + a.getSpecial(), startRow + 2, colStart);
+      }
+      drawText("***THIS ROW INTENTIONALLY LEFT BLANK***"), startRow + 3, 1);
       /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
     }
 
