@@ -411,7 +411,7 @@ public class Game{
       if (party.isEmpty()){
         TextBox(HEIGHT-2,2,76,3, "all party members have been defeated you lose");
       }
-
+      
     }//end of main game loop
 
 
