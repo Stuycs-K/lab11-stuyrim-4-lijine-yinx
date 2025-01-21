@@ -38,10 +38,10 @@ public class Game{
   public static void drawText(String s,int startRow, int startCol){
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     Text.go(startRow, startCol);
-    for (char c : s.toCharArray()) {
-      String coloredChar = Text.colorize(String.valueOf(c), Text.WHITE, Text.CYAN);
+    //for (char c : s.toCharArray()) {
+      String coloredChar = Text.colorize(s, Text.WHITE, Text.CYAN);
       System.out.print(coloredChar);
-    }
+    
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
 
@@ -130,7 +130,7 @@ public class Game{
         drawText("Hp: " + hpStr , startRow + 1, colStart);
 
 
-        String specialStr = String.format("%-15s: %d",a.getSpecialName(), a.getSpecial(), a.getSpecialMax());
+        String specialStr = String.format("%-15s: %d/%d",a.getSpecialName(), a.getSpecial(), a.getSpecialMax());
         drawText(specialStr, startRow + 2, colStart);
       }
 
