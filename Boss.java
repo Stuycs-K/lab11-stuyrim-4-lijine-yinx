@@ -59,4 +59,16 @@ public class Boss extends Adventurer{
     setHP(getHP() - healthLost);
     return this + " sacrifices " + healthLost + " HP to deal " + healthLost + " burn damage to " + other + ".";
    } 
+
+   public String support(Adventurer other){
+    if (rage >= 5){
+      int healAmount = 15;
+      other.setHP(other.getHP() + healAmount);
+      setSpecial(rage - 5);
+      return this + " feels bad for the adventuer and chooses to heal " + other + " for " + healAmount + " HP." + "The boss also loses 5 rage";
+    }
+    else {
+      return this + " the boss did not have enough rage";
+    }
+   }
   }

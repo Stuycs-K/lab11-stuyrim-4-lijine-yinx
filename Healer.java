@@ -62,7 +62,7 @@ public class Healer extends Adventurer{
   public String support(Adventurer other){
     int healAmount = (int)(Math.random() * 10) + 5;
     other.setHP(other.getHP() + healAmount);
-    return this + " heals " + other + " for " healAmount + " HP.";
+    return this + " heals " + other + " for " + healAmount + " HP.";
   }
 
   //heal or buff self
