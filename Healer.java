@@ -27,7 +27,7 @@ public class Healer extends Adventurer{
   public int getSpecialMax(){
     return manaMax;
   }
-  public abstract void setSpecial(int n){
+  public void setSpecial(int n){
       mana = n;
   }
 
@@ -49,7 +49,7 @@ public class Healer extends Adventurer{
   public String attack(Adventurer other){
     int damage = 10;
     other.applyDamage(damage);
-    return this + "smacks" + other + "with the staff for" + damage + " damage.";
+    return this + " smacks " + other + " with the staff for " + damage + " damage.";
   }
 
   /*This is an example of an improvement that you can make to allow
@@ -62,25 +62,25 @@ public class Healer extends Adventurer{
   public String support(Adventurer other){
     int healAmount = (int)(Math.random() * 10) + 5;
     other.setHP(other.getHP() + healAmount);
-    return this + "heals" + other + "for" healAmount + "HP.";
+    return this + " heals " + other + " for " healAmount + " HP.";
   }
 
   //heal or buff self
   public String support(){
     int healAmount = (int)(Math.random() * 10) + 5;
     setHP(getHP() + healAmount);
-    return this + "heals themselves for" + healAmount + "HP.";
+    return this + " heals themselves for " + healAmount + " HP.";
   }
 
   //hurt or hinder the target adventurer, consume some special resource
-  public String specialAttack(Adventurer other);
+  public String specialAttack(Adventurer other) {
     if (getSpecial() >= 10){
       setSpecial(getSpecial() - 10);
       int healAmount = (int)(Math.random() * 15) + 5;
       other.setHP(other.getHP() + healAmount);
-      return this + "casts a healing spell on" + other + ", restoring" + healAmount + "HP.";
-    } else{
-      return this + "tries to cast a healing spell but doesn't have enough mana."
+      return this + " casts a healing spell on " + other + ", restoring " + healAmount + " HP.";
+    } else {
+      return this + "tries to cast a healing spell but doesn't have enough mana.";
     }
-    }
+  } 
 }

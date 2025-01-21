@@ -43,12 +43,20 @@ public class Boss extends Adventurer{
   public String attack(Adventurer other){
     int damage = 20;
     other.applyDamage(damage);
-    return this + "shoots fire from his mouth and burns" + other + "for" + damage + "HP.";
+    return this + " shoots fire from his mouth and burns " + other + " for " + damage + " HP.";
   }
 
   public String support(){
-    int hp = 10;
-    if(getSpecial() > 10){
-      
+    int healAmount = 10;
+    setHP(getHP() + healAmount);
+    return this + " heals itself for " + healAmount + " HP.";
     }
+
+  public String specialAttack(Adventurer other) {
+    int maxDamage = 20;
+    int healthLost = Math.min(maxDamage, getHP());
+    other.applyDamage(healthLost);
+    setHP(getHP() - healthLost);
+    return this + " sacrifices " + healthLost + " HP to deal " + healthLost + " burn damage to " + other + ".";
+   } 
   }
