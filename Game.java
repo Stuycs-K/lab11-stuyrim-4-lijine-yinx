@@ -38,10 +38,10 @@ public class Game{
   public static void drawText(String s,int startRow, int startCol){
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     Text.go(startRow, startCol);
-    for (char c : s.toCharArray()) {
-      String coloredChar = Text.colorize(String.valueOf(c), Text.WHITE, Text.CYAN);
+    //for (char c : s.toCharArray()) {
+      String coloredChar = Text.colorize(s, Text.WHITE, Text.CYAN);
       System.out.print(coloredChar);
-    }
+    
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
 
@@ -126,12 +126,12 @@ public class Game{
         String nameStr = String.format("%-15s", a.getName());
         drawText(nameStr, startRow, colStart);
 
-        String hpStr = String.format("%-10s",colorByPercent(a.getHP(), a.getmaxHP()));
-        drawText(hpStr + colorByPercent(a.getHP(), a.getmaxHP()), startRow + 1, colStart);
+        String hpStr = colorByPercent(a.getHP(), a.getmaxHP());
+        drawText("Hp: " + hpStr , startRow + 1, colStart);
 
 
-        String specialStr = String.format("%-15s: %d",a.getSpecialName(), a.getSpecial());
-        drawText(specialStr + a.getSpecial(), startRow + 2, colStart);
+        String specialStr = String.format("%-15s: %d/%d",a.getSpecialName(), a.getSpecial(), a.getSpecialMax());
+        drawText(specialStr, startRow + 2, colStart);
       }
 
       drawText(" ", startRow + 3, 1);
@@ -146,8 +146,8 @@ public class Game{
     }
 
     double ratio = hp / (double) maxHP;
-    String base = String.format("%2d/%2d", hp, maxHP);
-
+    String base = String.format("%3d/%3d", hp, maxHP);
+    
     if (ratio < 0.25){
       return Text.colorize(base, Text.RED);
     } else if (ratio < 0.75){
