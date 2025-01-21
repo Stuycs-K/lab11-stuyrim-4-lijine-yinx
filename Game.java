@@ -93,7 +93,13 @@ public class Game{
     //return a random adventurer (choose between all available subclasses)
     //feel free to overload this method to allow specific names/stats.
     public static Adventurer createRandomAdventurer(){
-      return new CodeWarrior("Bob" +(int) (Math.random()*100));
+      if (Math.random() < 0.5){
+        return new CodeWarrior("Bob" +(int) (Math.random()*100));
+      } else if (Math.random() < 0.7){
+        return new Mage("Alice" + (int) (Math.random() * 100));
+      } else {
+        return new Healer("Gandolf" + (int) (Math.random() * 100));
+      }
     }
 
     /*Display a List of 2-4 adventurers on the rows row through row+3 (4 rows max)
@@ -135,14 +141,20 @@ public class Game{
     }
 
     double ratio = hp / (double) maxHP;
-    String base = String.format()
+    String base = String.format("%2d/%2d", hp, maxHP);
 
-    String output = String.format("%2s", hp+"")+"/"+String.format("%2s", maxHP+"");
+    if (ratio < 0.25){
+      return Text.colorize(output, TEXT.RED);
+    } else if (ratio < 0.75){
+      return Text.colorize(output, TEXT.YELLOW);
+    } else {
+      return Text.colorize(output, TEXT.WHITE);
+    }
+
     //COLORIZE THE OUTPUT IF HIGH/LOW:
     // under 25% : red
     // under 75% : yellow
     // otherwise : white
-    return output;
   }
 
 
@@ -157,19 +169,29 @@ public class Game{
     drawBackground();
 
     //draw player party
+    drawParty(party, 2);    
 
     //draw enemy party
+    drawParty(enemies, HEIGHT - 5);
 
+    Text.go(HEIGHT + 1, 1);
   }
 
   public static String userInput(Scanner in){
       //Move cursor to prompt location
-
+      Text.go(HEIGHT + 1, 1);
       //show cursor
+      Text.showCursor();
 
+      System.out.print("Enter command: ");
       String input = in.nextLine();
 
       //clear the text that was written
+      Text.hideCursor();
+
+      Text.go(HEIGHT + 1, 1);
+      String empty = " ".repeat(WIDTH - 2);
+      System.out.print(empty);
 
       return input;
   }

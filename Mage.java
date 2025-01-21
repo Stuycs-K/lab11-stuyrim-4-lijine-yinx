@@ -1,10 +1,18 @@
 public class Mage extends Adventurer{
     private int mana, manaMax;
 
-    public Mage(String name, int hp, int mana, int manaMax){
+    public Mage(String name, int hp){
         super(name,hp);
-        this.mana = mana;
-        this.manaMax = manaMax;
+        manaMax = 30;
+        mana = manaMax/2;
+    }
+
+    public Mage(String name){
+      this(name, 50);
+    }
+  
+    public Mage(){
+      this("wizard");
     }
 
     public String getSpecialName(){
