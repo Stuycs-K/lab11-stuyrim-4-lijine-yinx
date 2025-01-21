@@ -19,8 +19,8 @@ public class Game{
     for (int row = 1; row <= HEIGHT; row++) {
       for (int col = 1; col <= WIDTH; col++) {
         if (row == 1 || row == HEIGHT || col == 1 || col == WIDTH) {
-            Test.go(row, col);
-            Test.printChar('#', BORDER_COLOR, BORDER_BACKGROUND);
+            Text.go(row, col);
+            Text.printChar('#', BORDER_COLOR, BORDER_BACKGROUND);
         }
       }
     }
@@ -32,9 +32,9 @@ public class Game{
   //use this method in your other text drawing methods to make things simpler.
   public static void drawText(String s,int startRow, int startCol){
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    Test.go(startRow, startCol);
+    Text.go(startRow, startCol);
     for (char c : s.toCharArray()) {
-        Test.printChar(c, Text.WHITE, Test.BLACK);
+        Text.printChar(c, Text.WHITE, Text.BLACK);
     }
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
@@ -51,7 +51,7 @@ public class Game{
   */
   public static void TextBox(int row, int col, int width, int height, String text){
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    String[] words = test.split(" ");
+    String[] words = text.split(" ");
     StringBuilder currentLine = new StringBuilder();
     int currentRow = row;
 
@@ -59,10 +59,15 @@ public class Game{
       if (currentLine.length() + word.length() + 1 > width) {
           drawText(currentLine.length(), currentRow, col);
           currentRow++;
-          if (currentRow >= row + height) break;
+          if (currentRow >= row + height){
+            return;
+          }
           currentLine = new StringBuilder();
       }
-      currentLine.append((currentLine.length() == 0 ? "" : " ") + word);
+      if (currentLine.length() > 0){
+        currentLine.append(" ");
+      }
+      currentLine.append(word);
     }
 
     if (currentRow < row + height) {
@@ -78,7 +83,7 @@ public class Game{
     //return a random adventurer (choose between all available subclasses)
     //feel free to overload this method to allow specific names/stats.
     public static Adventurer createRandomAdventurer(){
-      return new CodeWarrior("Bob"+(int)(Math.random()*100));
+      return new CodeWarrior("Bob" +(int) (Math.random()*100));
     }
 
     /*Display a List of 2-4 adventurers on the rows row through row+3 (4 rows max)
@@ -92,16 +97,23 @@ public class Game{
     */
     public static void drawParty(ArrayList<Adventurer> party,int startRow){
 
+      if (party.size() == 0) return;
+
       /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
       int colWidth = WIDTH / party.size();
+
       for (int i = 0; i < party.size(); i++) {
         Adventurer a = party.get(i);
         int colStart = i * colWidth + 1;
+
         drawText(a.getName, startRow, colStart);
+
         drawText("HP: " + colorByPercent(a.getHP(), a.getMaxHP()), startRow + 1, colStart);
+
         drawText(a.getSpecialName() + ": " + a.getSpecial(), startRow + 2, colStart);
       }
-      drawText("***THIS ROW INTENTIONALLY LEFT BLANK***"), startRow + 3, 1);
+
+      drawText("***THIS ROW INTENTIONALLY LEFT BLANK***", startRow + 3, 1);
       /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
     }
 
