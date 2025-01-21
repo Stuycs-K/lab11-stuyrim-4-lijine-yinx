@@ -1,4 +1,3 @@
-import java.lang.foreign.AddressLayout;
 import java.util.*;
 
 import org.w3c.dom.Text;
@@ -12,6 +11,11 @@ public class Game{
     run();
   }
 
+  //helper method
+  public static void printColoredChar(char c, int foreground, int background){
+    String coloredChar = Text.colorize(String.valueOf(c), foreground, background);
+    System.out.print(coloredChar);
+  }
   //Display the borders of your screen that will not change.
   //Do not write over the blank areas where text will appear or parties will appear.
   public static void drawBackground(){
@@ -20,7 +24,7 @@ public class Game{
       for (int col = 1; col <= WIDTH; col++) {
         if (row == 1 || row == HEIGHT || col == 1 || col == WIDTH) {
             Text.go(row, col);
-            Text.printChar('#', BORDER_COLOR, BORDER_BACKGROUND);
+            printColoredChar('#', BORDER_COLOR, BORDER_BACKGROUND);
         }
       }
     }
@@ -34,7 +38,8 @@ public class Game{
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     Text.go(startRow, startCol);
     for (char c : s.toCharArray()) {
-        Text.printChar(c, Text.WHITE, Text.BLACK);
+      String coloredChar = Text.colorize(String.valueOf(c), Text.WHITE, Text.BLACK);
+      System.out.print(coloredChar);
     }
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
@@ -74,6 +79,11 @@ public class Game{
         drawText(currentLine.toString(), currentRow, col);
         currentRow++;
     }
+    while (currentRow < row + height){
+      String emptyLine = " ".repeat(width);
+      drawText(emptyLine, currentRow, col);
+      currentRow++;
+    }
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
 
@@ -106,7 +116,7 @@ public class Game{
         Adventurer a = party.get(i);
         int colStart = i * colWidth + 1;
 
-        drawText(a.getName, startRow, colStart);
+        drawText(a.getName(), startRow, colStart);
 
         drawText("HP: " + colorByPercent(a.getHP(), a.getMaxHP()), startRow + 1, colStart);
 
@@ -120,6 +130,13 @@ public class Game{
 
   //Use this to create a colorized number string based on the % compared to the max value.
   public static String colorByPercent(int hp, int maxHP){
+    if (maxHP <= 0){
+      return hp + "/" + maxHP;
+    }
+
+    double ratio = hp / (double) maxHP;
+    String base = String.format()
+
     String output = String.format("%2s", hp+"")+"/"+String.format("%2s", maxHP+"");
     //COLORIZE THE OUTPUT IF HIGH/LOW:
     // under 25% : red
@@ -160,7 +177,7 @@ public class Game{
   public static void quit(){
     Text.reset();
     Text.showCursor();
-    Text.go(32,1);
+    Text.go(HEIGHT + 2, 1);
   }
 
   public static void run(){
