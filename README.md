@@ -17,43 +17,48 @@ Make a clear list of features that work/dont work
 
 
 ## Adventurer Subclasses
+
 ## Healer subclass
 
-50 hp
-- ## weapon:
-- Staff 
+50 hp, 20 mana max, starts with half of manaMax
+
 - ## moves:
 - Support move
 - heals 20 hp and makes healed ally do 25% more damage
 - Attack move 
-- 10 dmg 
+- 10 dmg to the target
 - Special: 
-- Heal yourself for 20 hp but consume xx mana.
+- consumes 10 mana and heals the target for 5-19 hp
+- support:
+- heals the healer themselves for 5-14 hp
 
 
 ## Mage
 
-60 hp
+50 hp, 30 mana max, starts with half of manaMax
 - ## weapon: 
 - Wand 
 - ## moves:
 - Attack
-- does 15 dmg and makes enemies do 20% less damage
+- does 15 dmg 
 - Special 
-- does 20 dmg and applies burn to enemy team (burn does 5 damage each round)
+- consumes 10 mana and deals 20 damage 
+- support
+- restores 5 special to the target
+- or consumes 10 mana to restore 5 hp
 
 
 ## Boss
 
 120 hp
-Dragon
+Goblin King
 - ## moves:
 - Attacks
 - do 20 damage
--Supports 
-- heal for 10 hp
--Special 
-- loses hp to deal burn damage equivalent to health lost (max 20 dmg) 
+- Supports 
+- loses 5 rage to heal the target for 15 hp
+- Special 
+- does 20 damage
 
 
 
