@@ -6,6 +6,8 @@ public class Game{
   private static final int BORDER_COLOR = Text.BLACK;
   private static final int BORDER_BACKGROUND = Text.WHITE + Text.BACKGROUND;
 
+  private static ArrayList<Adventurer> enemies = new ArrayList<>();
+  private static ArrayList<Adventurer> party = new ArrayList<>();
   public static void main(String[] args) {
     run();
   }
@@ -37,7 +39,7 @@ public class Game{
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     Text.go(startRow, startCol);
     for (char c : s.toCharArray()) {
-      String coloredChar = Text.colorize(String.valueOf(c), Text.WHITE, Text.BLACK);
+      String coloredChar = Text.colorize(String.valueOf(c), Text.WHITE, Text.CYAN);
       System.out.print(coloredChar);
     }
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
@@ -119,13 +121,17 @@ public class Game{
 
       for (int i = 0; i < party.size(); i++) {
         Adventurer a = party.get(i);
-        int colStart = i * colWidth + 1;
+        int colStart = i * colWidth + 2;
 
-        drawText(a.getName(), startRow, colStart);
+        String nameStr = String.format("%-15s", a.getName());
+        drawText(nameStr, startRow, colStart);
 
-        drawText("HP: " + colorByPercent(a.getHP(), a.getMaxHP()), startRow + 1, colStart);
+        String hpStr = String.format("%-10s",colorByPercent(a.getHP(), a.getmaxHP()));
+        drawText(hpStr + colorByPercent(a.getHP(), a.getmaxHP()), startRow + 1, colStart);
 
-        drawText(a.getSpecialName() + ": " + a.getSpecial(), startRow + 2, colStart);
+
+        String specialStr = String.format("%-15s: %d",a.getSpecialName(), a.getSpecial());
+        drawText(specialStr + a.getSpecial(), startRow + 2, colStart);
       }
 
       drawText("***THIS ROW INTENTIONALLY LEFT BLANK***", startRow + 3, 1);
@@ -211,14 +217,15 @@ public class Game{
     //Make an ArrayList of Adventurers and add 1-3 enemies to it.
     //If only 1 enemy is added it should be the boss class.
     //start with 1 boss and modify the code to allow 2-3 adventurers later.
-    ArrayList<Adventurer>enemies = new ArrayList<Adventurer>();
+    
+    //ArrayList<Adventurer>enemies = new ArrayList<Adventurer>();
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     //YOUR CODE HERE
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
     enemies.add(new Boss(" Goblin King", 120));
     //Adventurers you control:
     //Make an ArrayList of Adventurers and add 2-4 Adventurers to it.
-    ArrayList<Adventurer> party = new ArrayList<>();
+    //ArrayList<Adventurer> party = new ArrayList<>();
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     //YOUR CODE HERE
     party.add(new Healer("ALice", 100));
@@ -262,7 +269,7 @@ public class Game{
           if (enemies.isEmpty()){
               TextBox(HEIGHT - 2, 2, 76, 1, "there are no enemies to attack");
           } else {
-            Adventurer target = enemies.get(whichOpponent % enemies.size());
+            Adventurer target = enemies.get(0);
             String attackResult = currentAdventurer.attack(target);
             TextBox(HEIGHT-2, 2, 76, 1, attackResult);
 
@@ -280,7 +287,7 @@ public class Game{
           if (enemies.isEmpty()){
             TextBox(HEIGHT - 2, 2, 76, 1, "there are no enemies to use special on");
           } else {
-            Adventurer target = enemies.get(whichOpponent % enemies.size());
+            Adventurer target = enemies.get(0);
             String specialResult = currentAdventurer.specialAttack(target);
             TextBox(HEIGHT-2, 2, 76, 1, specialResult);
 
