@@ -8,7 +8,7 @@ public class Healer extends Adventurer{
   }
 
   public Healer(String name){
-    this(name, 18);
+    this(name, 50);
   }
 
   public Healer(){
@@ -37,7 +37,7 @@ public class Healer extends Adventurer{
     if( n > getSpecialMax() - getSpecial()){
       n = getSpecialMax() - getSpecial();
     }
-    setSpecial(getSpecial()+n);
+    setSpecial(getSpecial()+ n);
     return n;
   }
 
