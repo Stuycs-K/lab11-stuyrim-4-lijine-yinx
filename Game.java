@@ -225,239 +225,300 @@ public class Game {
     Text.go(HEIGHT + 2, 1);
   }
 
-  public static void run(){
-    //Clear and initialize
+  public static void run() {
+    // Clear and initialize
     Text.hideCursor();
     Text.clear();
 
+    // Things to attack:
+    // Make an ArrayList of Adventurers and add 1-3 enemies to it.
+    // If only 1 enemy is added it should be the boss class.
+    // start with 1 boss and modify the code to allow 2-3 adventurers later.
 
-    //Things to attack:
-    //Make an ArrayList of Adventurers and add 1-3 enemies to it.
-    //If only 1 enemy is added it should be the boss class.
-    //start with 1 boss and modify the code to allow 2-3 adventurers later.
-    
-    //ArrayList<Adventurer>enemies = new ArrayList<Adventurer>();
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-    enemies.add(new Boss(" Goblin King", 120));
-    //Adventurers you control:
-    //Make an ArrayList of Adventurers and add 2-4 Adventurers to it.
-    //ArrayList<Adventurer> party = new ArrayList<>();
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    party.add(new Healer("Alice", 100));
-    party.add(new Mage("Bob", 80));
-    party.add(new CodeWarrior("Charlie", 90));
+    // ArrayList<Adventurer>enemies = new ArrayList<Adventurer>();
+    /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+    // YOUR CODE HERE
+    /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+    int chance = (int) (Math.random() * 11);
+    //fighting boss
+    if (chance >= 5) {
+      enemies.add(new Boss(" Goblin King", 120));
+      party.add(new CodeWarrior("solo king", 90));
+    } 
+    //fighting a party
+    else if (chance < 5) {
+      enemies.add(new Healer("Evil_Alice", 100));
+      enemies.add(new Mage("Evil_Bob", 80));
+      enemies.add(new CodeWarrior("Evil_Charlie", 90));
 
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+      party.add(new Healer("Alice", 100));
+      party.add(new Mage("Bob", 80));
+      party.add(new CodeWarrior("Charlie", 90));
+    }
+    // Adventurers you control:
+    // Make an ArrayList of Adventurers and add 2-4 Adventurers to it.
+    // ArrayList<Adventurer> party = new ArrayList<>();
+    /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+    // YOUR CODE HERE
+    // party.add(new Healer("Alice", 100));
+    // party.add(new Mage("Bob", 80));
+    // party.add(new CodeWarrior("Charlie", 90));
+
+    /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
 
     boolean partyTurn = true;
     int whichPlayer = 0;
     int whichOpponent = 0;
     int turn = 0;
-    String input = "";//blank to get into the main loop.
+    String input = "";// blank to get into the main loop.
     Scanner in = new Scanner(System.in);
-    //Draw the window border
+    // Draw the window border
 
-    //You can add parameters to draw screen!
-    drawScreen();//initial state.
+    // You can add parameters to draw screen!
+    drawScreen();// initial state.
 
-    //Main loop
+    // Main loop
 
-    //display this prompt at the start of the game.
-    String preprompt = "Enter command for "+party.get(whichPlayer)+": attack/support/special/quit";
+    // display this prompt at the start of the game.
+    String preprompt = "Enter command for " + party.get(whichPlayer) + ": attack/support/special/quit";
 
-    while(! (input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit"))){
-      //Read user input
+    while (!(input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit"))) {
+      // Read user input
       input = userInput(in);
 
-      //example debug statment
-      //TextBox(24,2,1,78,"input: "+input+" partyTurn:"+partyTurn+ " whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
+      // example debug statment
+      // TextBox(24,2,1,78,"input: "+input+" partyTurn:"+partyTurn+ "
+      // whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
 
-      //display event based on last turn's input
-      if(partyTurn){
+      // display event based on last turn's input
+      if (partyTurn) {
 
-        //Process user input for the last Adventurer:
+        // Process user input for the last Adventurer:
         Adventurer currentAdventurer = party.get(whichPlayer);
 
-        if(input.startsWith("attack") || input.startsWith("a")){
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE  
-          if (enemies.isEmpty()){
-              TextBox(HEIGHT - 2, 2, 76, 3, "there are no enemies to attack");
-          } else {
-            Adventurer target = enemies.get(0);
-            String attackResult = currentAdventurer.attack(target);
-            TextBox(HEIGHT-2, 2, 76, 3, attackResult);
+        if (input.startsWith("attack") || input.startsWith("a")) {
+          /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+          // YOUR CODE HERE
+          // if (enemies.isEmpty()){
+          // TextBox(HEIGHT - 2, 2, 76, 3, "there are no enemies to attack");
+          // } else {
+          // Adventurer target = enemies.get(0);
+          // String attackResult = currentAdventurer.attack(target);
+          // TextBox(HEIGHT-2, 2, 76, 3, attackResult);
 
-            if(target.getHP() <= 0) {
-              enemies.remove(target);
-              TextBox(HEIGHT-2, 2, 76, 3, target.getName() + " has been defeated");
-            }
-          }
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+          // if(target.getHP() <= 0) {
+          // enemies.remove(target);
+          // TextBox(HEIGHT-2, 2, 76, 3, target.getName() + " has been defeated");
+          // }
+          // }
 
-        }
-        else if(input.startsWith("special") || input.startsWith("sp")){
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE
           String[] parts = input.split(" ");
-          if (parts.length >= 2){
-            try{
+          if (parts.length >= 2) {
+            try {
               int targetIndex = Integer.parseInt(parts[1]);
-              if (targetIndex >= 0 && targetIndex < party.size()){
-                
-                if (enemies.isEmpty()){
+              if (targetIndex >= 0 && targetIndex < party.size()) {
+
+                if (enemies.isEmpty()) {
+                  TextBox(HEIGHT - 2, 2, 76, 3, "there are no enemies to use attack on");
+                } else {
+
+                  Adventurer target = enemies.get(targetIndex);
+                  String attackResult = currentAdventurer.attack(target);
+                  TextBox(HEIGHT - 2, 2, 76, 3, attackResult);
+
+                  TextBox(HEIGHT - 2, 2, 76, 3, attackResult);
+
+                  if (target.getHP() <= 0) {
+                    enemies.remove(target);
+                    TextBox(HEIGHT - 2, 2, 76, 3, target.getName() + " has been defeated");
+                  }
+                }
+                /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+              }
+
+              else {
+                TextBox(HEIGHT - 2, 2, 76, 3, "Invalid attack target");
+              }
+            } catch (NumberFormatException e) {
+              TextBox(HEIGHT - 2, 2, 76, 3, "Invalid attack command");
+            }
+          } else {
+            TextBox(HEIGHT - 2, 2, 76, 3, "Invalid attack command");
+
+          }
+          /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+
+        } else if (input.startsWith("special") || input.startsWith("sp")) {
+          /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+          // YOUR CODE HERE
+          String[] parts = input.split(" ");
+          if (parts.length >= 2) {
+            try {
+              int targetIndex = Integer.parseInt(parts[1]);
+              if (targetIndex >= 0 && targetIndex < party.size()) {
+
+                if (enemies.isEmpty()) {
                   TextBox(HEIGHT - 2, 2, 76, 3, "there are no enemies to use special on");
                 } else {
 
                   Adventurer target = enemies.get(targetIndex);
                   String specialResult = currentAdventurer.specialAttack(target);
-                  TextBox(HEIGHT-2, 2, 76, 3, specialResult);
+                  TextBox(HEIGHT - 2, 2, 76, 3, specialResult);
 
-                  TextBox(HEIGHT-2, 2, 76, 3, specialResult);
-      
-                  if(target.getHP() <= 0) {
+                  TextBox(HEIGHT - 2, 2, 76, 3, specialResult);
+
+                  if (target.getHP() <= 0) {
                     enemies.remove(target);
-                    TextBox(HEIGHT-2, 2, 76, 3, target.getName() + " has been defeated");
+                    TextBox(HEIGHT - 2, 2, 76, 3, target.getName() + " has been defeated");
                   }
                 }
-                /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+                /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
               }
-              
 
               else {
                 TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support target");
               }
-            }
-            catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
               TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support command");
             }
-          }
-          else{
+          } else {
             TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support command");
 
           }
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+          /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
         }
-          
-        else if(input.startsWith("su ") || input.startsWith("support ")){
-          //"support 0" or "su 0" or "su 2" etc.
-          //assume the value that follows su  is an integer.
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE
+
+        else if (input.startsWith("su ") || input.startsWith("support ")) {
+          // "support 0" or "su 0" or "su 2" etc.
+          // assume the value that follows su is an integer.
+          /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+          // YOUR CODE HERE
           String[] parts = input.split(" ");
-          if (parts.length >= 2){
-            try{
+          if (parts.length >= 2) {
+            try {
               int targetIndex = Integer.parseInt(parts[1]);
-              if (targetIndex >= 0 && targetIndex < party.size()){
+              if (targetIndex >= 0 && targetIndex < party.size()) {
                 Adventurer target = party.get(targetIndex);
                 String supportResult = currentAdventurer.support(target);
-                TextBox(HEIGHT-2, 2, 76, 3, supportResult);
-              }
-              else {
+                TextBox(HEIGHT - 2, 2, 76, 3, supportResult);
+              } else {
                 TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support target");
               }
-            }
-            catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
               TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support command");
             }
-          }
-          else{
+          } else {
             TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support command");
 
           }
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+          /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
         }
 
-        //You should decide when you want to re-ask for user input
-        //If no errors:
+        // You should decide when you want to re-ask for user input
+        // If no errors:
         whichPlayer++;
 
-
-        if(whichPlayer < party.size()){
-          //This is a player turn.
-          //Decide where to draw the following prompt:
-          String prompt = "Enter command for "+party.get(whichPlayer)+": attack/special/support/quit";
+        if (whichPlayer < party.size()) {
+          // This is a player turn.
+          // Decide where to draw the following prompt:
+          String prompt = "Enter command for " + party.get(whichPlayer) + ": attack/special/support/quit";
           drawText(prompt, HEIGHT + 1, 1);
 
-        }else{
-          //This is after the player's turn, and allows the user to see the enemy turn
-          //Decide where to draw the following prompt:
+        } else {
+          // This is after the player's turn, and allows the user to see the enemy turn
+          // Decide where to draw the following prompt:
           String prompt = "press enter to see monster's turn";
           TextBox(HEIGHT + 1, 1, WIDTH - 2, 3, prompt);
 
           partyTurn = false;
           whichOpponent = 0;
         }
-        //done with one party member
-      }else{
-        //not the party turn!
-        if (enemies.isEmpty()){
+        // done with one party member
+      } else {
+        // not the party turn!
+        if (enemies.isEmpty()) {
           TextBox(HEIGHT - 2, 2, 76, 3, "you won");
         }
 
-        if (whichOpponent >= enemies.size()){
+        if (whichOpponent >= enemies.size()) {
           partyTurn = true;
           whichPlayer = 0;
           turn++;
-          String prompt = "enter command for " + party.get(whichPlayer).getName()+": attack/special/support/quit";
-          drawText(prompt, HEIGHT+1, 1);
+          String prompt = "enter command for " + party.get(whichPlayer).getName() + ": attack/special/support/quit";
+          drawText(prompt, HEIGHT + 1, 1);
           continue;
         }
 
         Adventurer currentEnemy = enemies.get(whichOpponent);
 
-        if(party.isEmpty()){
-          TextBox(HEIGHT-2, 2, 76, 3, "you lose as all your party members were defeated");
+        if (party.isEmpty()) {
+          TextBox(HEIGHT - 2, 2, 76, 3, "you lose as all your party members were defeated");
           break;
         }
 
-        Adventurer target = party.get((int)(Math.random() * party.size()));
-        String enemyAttackResult = currentEnemy.attack(target);
-        TextBox(HEIGHT-2, 2, 76, 1, enemyAttackResult);
-        //enemy attacks a randomly chosen person with a randomly chosen attack.z`
-        //Enemy action choices go here!
-        /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-        //YOUR CODE HERE
-        /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-        if (target.getHP() <= 0){
-          party.remove(target);
-          TextBox(HEIGHT-2, 2, 76, 3, target.getName() + " has been defeated");
+        // Adventurer target = party.get((int) (Math.random() * party.size()));
+        if (enemies.size() == 3) {
+          int i = 0;
+          while (i < 3) {
+            Adventurer target = party.get((int) (Math.random() * party.size()));
+            if (target.getHP() <= 0) {
+              party.remove(target);
+              TextBox(HEIGHT - 2, 2, 76, 3, target.getName() + " has been defeated");
+            }
+            String enemyAttackResult = enemies.get(i).randomAttack(target);
+            TextBox(HEIGHT - 2, 2, 76, 1, enemyAttackResult);
+            i++;
+          }
+        } else {
+          int i = 0;
+          Adventurer target = party.get((int) (Math.random() * party.size()));
+          if (target.getHP() <= 0) {
+            party.remove(target);
+            TextBox(HEIGHT - 2, 2, 76, 3, target.getName() + " has been defeated");
+          }
+          String enemyAttackResult = enemies.get(i).randomAttack(target);
+          TextBox(HEIGHT - 2, 2, 76, 1, enemyAttackResult);
         }
 
-        //Decide where to draw the following prompt:
+        // String enemyAttackResult = currentEnemy.attack(target);
+        // enemy attacks a randomly chosen person with a randomly chosen attack.z`
+        // Enemy action choices go here!
+        /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+        // YOUR CODE HERE
+        /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+
+        // Decide where to draw the following prompt:
         String prompt = "press enter to see next turn";
-        TextBox(HEIGHT+1, 1, WIDTH-2, 3, prompt);
+        TextBox(HEIGHT + 1, 1, WIDTH - 2, 3, prompt);
         whichOpponent++;
 
-      }//end of one enemy.
+      } // end of one enemy.
 
-      //modify this if statement.
-      if(!partyTurn && whichOpponent >= enemies.size()){
-        //THIS BLOCK IS TO END THE ENEMY TURN
-        //It only triggers after the last enemy goes.
+      // modify this if statement.
+      if (!partyTurn && whichOpponent >= enemies.size()) {
+        // THIS BLOCK IS TO END THE ENEMY TURN
+        // It only triggers after the last enemy goes.
         whichPlayer = 0;
         turn++;
-        partyTurn=true;
-        //display this prompt before player's turn
-        String prompt = "Enter command for "+party.get(whichPlayer)+": attack/special/support/quit";
-        drawText(prompt, HEIGHT+1, 1);
+        partyTurn = true;
+        // display this prompt before player's turn
+        String prompt = "Enter command for " + party.get(whichPlayer) + ": attack/special/support/quit";
+        drawText(prompt, HEIGHT + 1, 1);
       }
 
-      //display the updated screen after input has been processed.
+      // display the updated screen after input has been processed.
       drawScreen();
 
-      if (enemies.isEmpty()){
-        TextBox(HEIGHT-2,2,76,3, "all enemies have been defeated you won");
+      if (enemies.isEmpty()) {
+        TextBox(HEIGHT - 2, 2, 76, 3, "all enemies have been defeated you won");
       }
-      if (party.isEmpty()){
-        TextBox(HEIGHT-2,2,76,3, "all party members have been defeated you lose");
+      if (party.isEmpty()) {
+        TextBox(HEIGHT - 2, 2, 76, 3, "all party members have been defeated you lose");
       }
-      
-    }// end of main game loop
 
-  // After quit reset things:
-  quit();
-}}
+    } // end of main game loop
+
+    // After quit reset things:
+    quit();
+  }
+}
