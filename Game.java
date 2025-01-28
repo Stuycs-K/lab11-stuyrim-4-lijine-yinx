@@ -1,3 +1,6 @@
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class Game{
@@ -36,6 +39,11 @@ public class Game{
   //(columns and rows start at 1 (not zero) in the terminal)
   //use this method in your other text drawing methods to make things simpler.
   public static void drawText(String s,int startRow, int startCol){
+    try {
+      Files.write(Paths.get("/tmp/game.log"), String.format("startRow=%d,startCol=%ds=%s\n", startRow, startCol, s).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+    } catch (Exception e) {
+
+    }
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     Text.go(startRow, startCol);
     //for (char c : s.toCharArray()) {
@@ -60,6 +68,12 @@ public class Game{
     String[] words = text.split(" ");
     StringBuilder currentLine = new StringBuilder();
     int currentRow = row;
+
+    String SPACE_FILL_78_COLS = "                                                                              ";
+
+    drawText(SPACE_FILL_78_COLS, HEIGHT - 2, 1);
+    drawText(SPACE_FILL_78_COLS, HEIGHT - 1, 1);
+
 
     for (String word : words) {
       if (currentLine.length() + word.length() + 1 > width) {
@@ -411,7 +425,7 @@ public class Game{
       if (party.isEmpty()){
         TextBox(HEIGHT-2,2,76,3, "all party members have been defeated you lose");
       }
-
+      
     }//end of main game loop
 
 
