@@ -3,7 +3,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-public class Game{
+public class Game {
   private static final int WIDTH = 80;
   private static final int HEIGHT = 30;
   private static final int BORDER_COLOR = Text.BLACK;
@@ -11,60 +11,70 @@ public class Game{
 
   private static ArrayList<Adventurer> enemies = new ArrayList<>();
   private static ArrayList<Adventurer> party = new ArrayList<>();
+
   public static void main(String[] args) {
     run();
   }
 
-  //helper method
-  public static void printColoredChar(char c, int foreground, int background){
+  // helper method
+  public static void printColoredChar(char c, int foreground, int background) {
     String coloredChar = Text.colorize(String.valueOf(c), foreground, background);
     System.out.print(coloredChar);
   }
-  //Display the borders of your screen that will not change.
-  //Do not write over the blank areas where text will appear or parties will appear.
-  public static void drawBackground(){
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+  // Display the borders of your screen that will not change.
+  // Do not write over the blank areas where text will appear or parties will
+  // appear.
+  public static void drawBackground() {
+    /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
     for (int row = 1; row <= HEIGHT; row++) {
       for (int col = 1; col <= WIDTH; col++) {
         if (row == 1 || row == HEIGHT || col == 1 || col == WIDTH) {
-            Text.go(row, col);
-            printColoredChar('#', BORDER_COLOR, BORDER_BACKGROUND);
+          Text.go(row, col);
+          printColoredChar('#', BORDER_COLOR, BORDER_BACKGROUND);
         }
       }
     }
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
   }
 
-  //Display a line of text starting at
-  //(columns and rows start at 1 (not zero) in the terminal)
-  //use this method in your other text drawing methods to make things simpler.
-  public static void drawText(String s,int startRow, int startCol){
+  // Display a line of text starting at
+  // (columns and rows start at 1 (not zero) in the terminal)
+  // use this method in your other text drawing methods to make things simpler.
+  public static void drawText(String s, int startRow, int startCol) {
     try {
-      Files.write(Paths.get("/tmp/game.log"), String.format("startRow=%d,startCol=%ds=%s\n", startRow, startCol, s).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+      Files.write(Paths.get("/tmp/game.log"),
+          String.format("startRow=%d,startCol=%ds=%s\n", startRow, startCol, s).getBytes(), StandardOpenOption.CREATE,
+          StandardOpenOption.APPEND);
     } catch (Exception e) {
 
     }
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+    /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
     Text.go(startRow, startCol);
-    //for (char c : s.toCharArray()) {
-      String coloredChar = Text.colorize(s, Text.WHITE, Text.CYAN);
-      System.out.print(coloredChar);
-    
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    // for (char c : s.toCharArray()) {
+    String coloredChar = Text.colorize(s, Text.WHITE, Text.CYAN);
+    System.out.print(coloredChar);
+
+    /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
   }
 
-  /*Use this method to place text on the screen at a particular location.
-  *When the length of the text exceeds width, continue on the next line
-  *for up to height lines.
-  *All remaining locations in the text box should be written with spaces to
-  *clear previously written text.
-  *@param row the row to start the top left corner of the text box.
-  *@param col the column to start the top left corner of the text box.
-  *@param width the number of characters per row
-  *@param height the number of rows
-  */
-  public static void TextBox(int row, int col, int width, int height, String text){
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+  /*
+   * Use this method to place text on the screen at a particular location.
+   * When the length of the text exceeds width, continue on the next line
+   * for up to height lines.
+   * All remaining locations in the text box should be written with spaces to
+   * clear previously written text.
+   * 
+   * @param row the row to start the top left corner of the text box.
+   * 
+   * @param col the column to start the top left corner of the text box.
+   * 
+   * @param width the number of characters per row
+   * 
+   * @param height the number of rows
+   */
+  public static void TextBox(int row, int col, int width, int height, String text) {
+    /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
     String[] words = text.split(" ");
     StringBuilder currentLine = new StringBuilder();
     int currentRow = row;
@@ -74,148 +84,142 @@ public class Game{
     drawText(SPACE_FILL_78_COLS, HEIGHT - 2, 1);
     drawText(SPACE_FILL_78_COLS, HEIGHT - 1, 1);
 
-
     for (String word : words) {
       if (currentLine.length() + word.length() + 1 > width) {
-          drawText(currentLine.toString(), currentRow, col);
-          currentRow++;
-          if (currentRow >= row + height){
-            return;
-          }
-          currentLine = new StringBuilder();
+        drawText(currentLine.toString(), currentRow, col);
+        currentRow++;
+        if (currentRow >= row + height) {
+          return;
+        }
+        currentLine = new StringBuilder();
       }
-      if (currentLine.length() > 0){
+      if (currentLine.length() > 0) {
         currentLine.append(" ");
       }
       currentLine.append(word);
     }
 
     if (currentRow < row + height) {
-        drawText(currentLine.toString(), currentRow, col);
-        currentRow++;
+      drawText(currentLine.toString(), currentRow, col);
+      currentRow++;
     }
-    while (currentRow < row + height){
+    while (currentRow < row + height) {
       String emptyLine = " ".repeat(width);
       drawText(emptyLine, currentRow, col);
       currentRow++;
     }
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
   }
 
+  // return a random adventurer (choose between all available subclasses)
+  // feel free to overload this method to allow specific names/stats.
+  public static Adventurer createRandomAdventurer() {
+    if (Math.random() < 0.5) {
+      return new CodeWarrior("Bob" + (int) (Math.random() * 100));
+    } else if (Math.random() < 0.7) {
+      return new Mage("Alice" + (int) (Math.random() * 100));
+    } else {
+      return new Healer("Gandolf" + (int) (Math.random() * 100));
+    }
+  }
 
+  /*
+   * Display a List of 2-4 adventurers on the rows row through row+3 (4 rows max)
+   * Should include Name HP and Special on 3 separate lines.
+   * Note there is one blank row reserved for your use if you choose.
+   * Format:
+   * Bob Amy Jun
+   * HP: 10 HP: 15 HP:19
+   * Caffeine: 20 Mana: 10 Snark: 1
+   * ***THIS ROW INTENTIONALLY LEFT BLANK***
+   */
+  public static void drawParty(ArrayList<Adventurer> party, int startRow) {
 
+    if (party.size() == 0)
+      return;
 
-    //return a random adventurer (choose between all available subclasses)
-    //feel free to overload this method to allow specific names/stats.
-    public static Adventurer createRandomAdventurer(){
-      if (Math.random() < 0.5){
-        return new CodeWarrior("Bob" +(int) (Math.random()*100));
-      } else if (Math.random() < 0.7){
-        return new Mage("Alice" + (int) (Math.random() * 100));
-      } else {
-        return new Healer("Gandolf" + (int) (Math.random() * 100));
-      }
+    /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+    int colWidth = WIDTH / party.size();
+
+    for (int i = 0; i < party.size(); i++) {
+      Adventurer a = party.get(i);
+      int colStart = i * colWidth + 2;
+
+      String nameStr = String.format("%-15s", a.getName());
+      drawText(nameStr, startRow, colStart);
+
+      String hpStr = colorByPercent(a.getHP(), a.getmaxHP());
+      drawText("Hp: " + hpStr, startRow + 1, colStart);
+
+      String specialStr = String.format("%-15s: %d/%d", a.getSpecialName(), a.getSpecial(), a.getSpecialMax());
+      drawText(specialStr, startRow + 2, colStart);
     }
 
-    /*Display a List of 2-4 adventurers on the rows row through row+3 (4 rows max)
-    *Should include Name HP and Special on 3 separate lines.
-    *Note there is one blank row reserved for your use if you choose.
-    *Format:
-    *Bob          Amy        Jun
-    *HP: 10       HP: 15     HP:19
-    *Caffeine: 20 Mana: 10   Snark: 1
-    * ***THIS ROW INTENTIONALLY LEFT BLANK***
-    */
-    public static void drawParty(ArrayList<Adventurer> party,int startRow){
+    drawText(" ", startRow + 3, 1);
+    /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+  }
 
-      if (party.size() == 0) return;
-
-      /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-      int colWidth = WIDTH / party.size();
-
-      for (int i = 0; i < party.size(); i++) {
-        Adventurer a = party.get(i);
-        int colStart = i * colWidth + 2;
-
-        String nameStr = String.format("%-15s", a.getName());
-        drawText(nameStr, startRow, colStart);
-
-        String hpStr = colorByPercent(a.getHP(), a.getmaxHP());
-        drawText("Hp: " + hpStr , startRow + 1, colStart);
-
-
-        String specialStr = String.format("%-15s: %d/%d",a.getSpecialName(), a.getSpecial(), a.getSpecialMax());
-        drawText(specialStr, startRow + 2, colStart);
-      }
-
-      drawText(" ", startRow + 3, 1);
-      /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-    }
-
-
-  //Use this to create a colorized number string based on the % compared to the max value.
-  public static String colorByPercent(int hp, int maxHP){
-    if (maxHP <= 0){
+  // Use this to create a colorized number string based on the % compared to the
+  // max value.
+  public static String colorByPercent(int hp, int maxHP) {
+    if (maxHP <= 0) {
       return hp + "/" + maxHP;
     }
 
     double ratio = hp / (double) maxHP;
     String base = String.format("%3d/%3d", hp, maxHP);
-    
-    if (ratio < 0.25){
+
+    if (ratio < 0.25) {
       return Text.colorize(base, Text.RED);
-    } else if (ratio < 0.75){
+    } else if (ratio < 0.75) {
       return Text.colorize(base, Text.YELLOW);
     } else {
       return Text.colorize(base, Text.WHITE);
     }
 
-    //COLORIZE THE OUTPUT IF HIGH/LOW:
+    // COLORIZE THE OUTPUT IF HIGH/LOW:
     // under 25% : red
     // under 75% : yellow
     // otherwise : white
   }
 
-
-
-
-
-  //Display the party and enemies
-  //Do not write over the blank areas where text will appear.
-  //Place the cursor at the place where the user will by typing their input at the end of this method.
-  public static void drawScreen(){
+  // Display the party and enemies
+  // Do not write over the blank areas where text will appear.
+  // Place the cursor at the place where the user will by typing their input at
+  // the end of this method.
+  public static void drawScreen() {
 
     drawBackground();
 
-    //draw player party
-    drawParty(party, 2);    
+    // draw player party
+    drawParty(party, 2);
 
-    //draw enemy party
+    // draw enemy party
     drawParty(enemies, 10);
 
     Text.go(HEIGHT + 1, 1);
   }
 
-  public static String userInput(Scanner in){
-      //Move cursor to prompt location
-      Text.go(20, 1);
-      //show cursor
-      Text.showCursor();
+  public static String userInput(Scanner in) {
+    // Move cursor to prompt location
+    Text.go(20, 1);
+    // show cursor
+    Text.showCursor();
 
-      System.out.print("Enter command: ");
-      String input = in.nextLine();
+    System.out.print("Enter command: ");
+    String input = in.nextLine();
 
-      //clear the text that was written
-      Text.hideCursor();
+    // clear the text that was written
+    Text.hideCursor();
 
-      Text.go(21, 1);
-      String empty = " ".repeat(WIDTH - 2);
-      System.out.print(empty);
+    Text.go(21, 1);
+    String empty = " ".repeat(WIDTH - 2);
+    System.out.print(empty);
 
-      return input;
+    return input;
   }
 
-  public static void quit(){
+  public static void quit() {
     Text.reset();
     Text.showCursor();
     Text.go(HEIGHT + 2, 1);
@@ -242,7 +246,7 @@ public class Game{
     //ArrayList<Adventurer> party = new ArrayList<>();
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
     //YOUR CODE HERE
-    party.add(new Healer("ALice", 100));
+    party.add(new Healer("Alice", 100));
     party.add(new Mage("Bob", 80));
     party.add(new CodeWarrior("Charlie", 90));
 
@@ -277,7 +281,7 @@ public class Game{
         //Process user input for the last Adventurer:
         Adventurer currentAdventurer = party.get(whichPlayer);
 
-        if(input.equals("attack") || input.equals("a")){
+        if(input.startsWith("attack") || input.startsWith("a")){
           /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
           //YOUR CODE HERE  
           if (enemies.isEmpty()){
@@ -295,23 +299,49 @@ public class Game{
           /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
         }
-        else if(input.equals("special") || input.equals("sp")){
+        else if(input.startsWith("special") || input.startsWith("sp")){
           /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
           //YOUR CODE HERE
-          if (enemies.isEmpty()){
-            TextBox(HEIGHT - 2, 2, 76, 3, "there are no enemies to use special on");
-          } else {
-            Adventurer target = enemies.get(0);
-            String specialResult = currentAdventurer.specialAttack(target);
-            TextBox(HEIGHT-2, 2, 76, 3, specialResult);
+          String[] parts = input.split(" ");
+          if (parts.length >= 2){
+            try{
+              int targetIndex = Integer.parseInt(parts[1]);
+              if (targetIndex >= 0 && targetIndex < party.size()){
+                
+                if (enemies.isEmpty()){
+                  TextBox(HEIGHT - 2, 2, 76, 3, "there are no enemies to use special on");
+                } else {
 
-            if(target.getHP() <= 0) {
-              enemies.remove(target);
-              TextBox(HEIGHT-2, 2, 76, 3, target.getName() + " has been defeated");
+                  Adventurer target = enemies.get(targetIndex);
+                  String specialResult = currentAdventurer.specialAttack(target);
+                  TextBox(HEIGHT-2, 2, 76, 3, specialResult);
+
+                  TextBox(HEIGHT-2, 2, 76, 3, specialResult);
+      
+                  if(target.getHP() <= 0) {
+                    enemies.remove(target);
+                    TextBox(HEIGHT-2, 2, 76, 3, target.getName() + " has been defeated");
+                  }
+                }
+                /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+              }
+              
+
+              else {
+                TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support target");
+              }
             }
+            catch(NumberFormatException e){
+              TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support command");
+            }
+          }
+          else{
+            TextBox(HEIGHT - 2, 2, 76, 3, "Invalid support command");
+
           }
           /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
         }
+          
         else if(input.startsWith("su ") || input.startsWith("support ")){
           //"support 0" or "su 0" or "su 2" etc.
           //assume the value that follows su  is an integer.
@@ -426,10 +456,8 @@ public class Game{
         TextBox(HEIGHT-2,2,76,3, "all party members have been defeated you lose");
       }
       
-    }//end of main game loop
+    }// end of main game loop
 
-
-    //After quit reset things:
-    quit();
-  }
-}
+  // After quit reset things:
+  quit();
+}}
