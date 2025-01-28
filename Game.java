@@ -80,9 +80,16 @@ public class Game {
     int currentRow = row;
 
     String SPACE_FILL_78_COLS = "                                                                              ";
-
-    drawText(SPACE_FILL_78_COLS, HEIGHT - 2, 1);
-    drawText(SPACE_FILL_78_COLS, HEIGHT - 1, 1);
+    if (row == HEIGHT - 2) {
+      drawText(SPACE_FILL_78_COLS, HEIGHT - 2, 1);
+      drawText(SPACE_FILL_78_COLS, HEIGHT - 1, 1);
+    }
+    if (row == HEIGHT+1){
+      drawText(SPACE_FILL_78_COLS, HEIGHT +1, 1);
+    }
+    if (row == HEIGHT+1){
+      drawText(SPACE_FILL_78_COLS, HEIGHT +1, 1);
+    }
 
     for (String word : words) {
       if (currentLine.length() + word.length() + 1 > width) {
@@ -206,6 +213,13 @@ public class Game {
     // show cursor
     Text.showCursor();
 
+    System.out.print("                                                      ");
+    
+    // Move cursor to prompt location
+    Text.go(20, 1);
+    // show cursor
+    Text.showCursor();
+
     System.out.print("Enter command: ");
     String input = in.nextLine();
 
@@ -240,12 +254,12 @@ public class Game {
     // YOUR CODE HERE
     /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
     int chance = (int) (Math.random() * 11);
-    //fighting boss
+    // fighting boss
     if (chance >= 5) {
       enemies.add(new Boss(" Goblin King", 120));
       party.add(new CodeWarrior("solo king", 90));
-    } 
-    //fighting a party
+    }
+    // fighting a party
     else if (chance < 5) {
       enemies.add(new Healer("Evil_Alice", 100));
       enemies.add(new Mage("Evil_Bob", 80));
@@ -456,28 +470,32 @@ public class Game {
           break;
         }
 
-        // Adventurer target = party.get((int) (Math.random() * party.size()));
-        if (enemies.size() == 3) {
-          int i = 0;
-          while (i < 3) {
-            Adventurer target = party.get((int) (Math.random() * party.size()));
-            if (target.getHP() <= 0) {
-              party.remove(target);
-              TextBox(HEIGHT - 2, 2, 76, 3, target.getName() + " has been defeated");
-            }
-            String enemyAttackResult = enemies.get(i).randomAttack(target);
-            TextBox(HEIGHT - 2, 2, 76, 1, enemyAttackResult);
-            i++;
-          }
-        } else {
-          int i = 0;
+        /*
+         * Adventurer target = party.get((int) (Math.random() * party.size()));
+         * if (enemies.size() == 3) {
+         * whichOpponent = 0;
+         * while (i < 3) {
+         * Adventurer target = party.get((int) (Math.random() * party.size()));
+         * if (target.getHP() <= 0) {
+         * party.remove(target);
+         * TextBox(HEIGHT - 2, 2, 76, 3, target.getName() + " has been defeated");
+         * }
+         * String enemyAttackResult = enemies.get(i).randomAttack(target);
+         * TextBox(HEIGHT - 2, 2, 76, 1, enemyAttackResult);
+         * i++;
+         * }
+         * }
+         */ else {
           Adventurer target = party.get((int) (Math.random() * party.size()));
+
+          String enemyAttackResult = currentEnemy.randomAttack(target);
+          TextBox(HEIGHT - 2, 2, 76, 1, enemyAttackResult);
+
           if (target.getHP() <= 0) {
             party.remove(target);
             TextBox(HEIGHT - 2, 2, 76, 3, target.getName() + " has been defeated");
           }
-          String enemyAttackResult = enemies.get(i).randomAttack(target);
-          TextBox(HEIGHT - 2, 2, 76, 1, enemyAttackResult);
+
         }
 
         // String enemyAttackResult = currentEnemy.attack(target);
